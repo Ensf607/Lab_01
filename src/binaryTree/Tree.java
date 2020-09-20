@@ -33,7 +33,7 @@ public class Tree {
 						return;
 					}
 				} else {
-					System.err.println(n+"Student already exisit");
+					System.err.println(n+" Student already exisit");
 					return;
 				}
 
@@ -299,8 +299,26 @@ public class Tree {
 
 	}
 
-	public int height() {
-		return 0;
+	public int height(Node node) {
+		Node pointer=node;
+		int heightLeft=0;
+		int heightRight=0;
+		if(node.left==null && node.right==null){
+			return 0;
+		}
+		else if(node.left!=null || node.right!=null) {
+			System.err.println(Math.max(heightLeft, heightRight));
+			if(node.left!=null) {
+				heightLeft+=(height(pointer.left)+1);
+				return heightLeft;
+			}
+			if(node.right!=null) {
+				heightRight+=(height(pointer.right)+1);
+				return heightRight;
+			}
+			
+		}
+		return Math.max(heightLeft, heightRight);
 
 	}
 
