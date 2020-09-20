@@ -20,17 +20,23 @@ public static void main(String[] args) {
 	tree.insert(new Node("khaled",62));
 	tree.insert(new Node("khaled",-11));
 	tree.insert(new Node("khaled",-9));
+	tree.insert(new Node("khaled",3));
+	tree.insert(new Node("khaled",11));
+	tree.insert(new Node("khaled",15));
 	tree.print();
-	Node result=tree.search(-11);
-	Node parent=tree.findParent(result);
-	Node smallest=tree.findSmallest(result);
-	Node largest=tree.findLargest(result);
-//	tree.delete(-10);
+//	Node result=tree.search(2);
+//	Node parent=tree.findParent(result);
+//	Node smallest=tree.findSmallest(result);
+//	Node largest=tree.findLargest(result);
+	tree.delete(12);
 	System.out.println("-------------");
-//	tree.print();
+	tree.print();
+	System.out.println("-------------");
+	Node result=tree.search(11);
+	Node parent=tree.findParent(result);
 	
 //	System.out.println(tree.search(10).name);
-	System.out.println(result+" PArnet is "+parent +"smallest is:  "+smallest+"\n Largest is:"+largest);
+	System.out.println(result.right+" PArnet is "+parent );
 	
 }
 }
