@@ -93,53 +93,145 @@ else if(id<pointer.getId())
 
 }
  return null;}
-//public void delete( int id) {
-//	Node result=search(id);
-//	Node parent=findParent(result);
-//
-//	if(parent !=null) {
-//		//case 1 leaf node
-//		if(result.getId()>parent.getId() &&(result.right==null && result.left==null)) {
-//			parent.right=null;
-//		}
-//		else if(result.getId()<parent.getId() &&(result.right==null && result.left==null))
-//			parent.left=null;
-//		//case 2 single child
-//		else if(result.getId()>parent.getId()) {
-//				if(result.right!=null && result.left==null)
-//						parent.right=result.right;
-//				else if (result.right==null && result.left!=null)
-//					parent.right=result.left;
-//				
-//	}
-//		else if(result.getId()<parent.getId()) {
-//			if(result.right!=null && result.left==null)
-//					parent.left=result.right;
-//			else if (result.right==null && result.left!=null)
-//				parent.left=result.left;
-//			
-//}
-//		//case 3 parent  either smalles of right tree or largest of left tree
-//		else if(result.getId()>parent.getId()) {
-//			Node smallest=findSmallest(result);
-//			Node smallestParent=findParent(smallest);
-//			
-//					
-//		}
-//			
-//			
-//		}
-//		
-//		
-//	
-//	}
-//	
-//	
-//}
-private Node findSmallest(Node result) {
+public void delete( int id) {
+	Node result=search(id);
+	if(result==null) {
+		System.out.println("Node doesnt exist");
+		return;
+	}
+	Node parent=findParent(result);
+	
+
+	if(parent !=null) {
+		//case 1 leaf node
+		if(result.getId()>parent.getId()) {
+			if(result.right==null && result.left==null) {
+			System.out.println("CASE 1");
+			parent.right=null;
+			return;
+		}
+		
+		//case 2 single child
+			
+			else if(result.right!=null && result.left==null)
+						{parent.right=result.right;
+						return;
+						}
+			else if (result.right==null && result.left!=null)
+					{parent.right=result.left;
+					return;
+					}
+				 
+	
+		
+
+		//case 3 parent  either smalles of right tree or largest of left tree
+		/// A-- Right subtree
+			else if(result.right!=null && result.left!=null) {
+//				System.out.println("HERE");
+			Node smallest=findSmallest(result);
+			Node smallestParent=findParent(smallest);
+			result.setId(smallest.id);
+			result.setName(smallest.name);
+//			System.err.println(result);
+			System.err.println("smallest"+smallest+"   Parent: "+smallestParent);
+			if(smallest.getId()>smallestParent.getId()) {
+				if(smallest.right==null && smallest.left==null)
+					{
+					
+					smallestParent.right=null;
+					}
+				else if(smallest.right!=null && smallest.left==null) {
+					
+					smallestParent.right=smallest.right;
+				}
+					
+			else if (smallest.right==null && smallest.left!=null)
+				smallestParent.right=smallest.left;}
+		
+		else if(smallest.getId()<smallestParent.getId()) {
+				if(smallest.right==null && smallest.left==null)
+					{
+					
+					smallest.left=null;
+					}
+		//case 2 single child
+				else if(smallest.right!=null && smallest.left==null)
+					smallestParent.left=smallest.right;
+			else if (smallest.right==null && smallest.left!=null)
+				smallest.left=smallest.left;
+			
+}
+			
+			
+					
+		}}
+		
+		else if(result.getId()<parent.getId()) {
+			if(result.right==null && result.left==null)
+				parent.left=null;
+			else if(result.right!=null && result.left==null)
+					parent.left=result.right;
+			else if (result.right==null && result.left!=null)
+				parent.left=result.left;
+			
+		/// B-- Left subtree
+		else if(result.right!=null && result.left!=null) {
+			
+			Node largest=findLargest(result);
+			Node largestParent=findParent(largest);
+			result.setId(largest.id);
+			result.setName(largest.name);
+			if(largest.getId()>largestParent.getId()) {
+					if(largest.right==null && largest.left==null)
+						largestParent.right=null;
+					else if(largest.right!=null && largest.left==null)
+						largestParent.right=largest.right;
+				else if (largest.right==null && largest.left!=null)
+					largestParent.right=largest.left;}
+			
+			else if(largest.getId()<largestParent.getId()) {
+					if(largest.right==null && largest.left==null)
+						largest.left=null;
+			//case 2 single child
+					else if(largest.right!=null && largest.left==null)
+						largestParent.left=largest.right;
+				else if (largest.right==null && largest.left!=null)
+					largestParent.left=largest.left;
+				
+	}
+			
+			
+					
+		}
+			
+		}} else
+		root=null;
+	
+		
+		
+	
+	}
+	
+	
+public Node findLargest(Node node) {
+	
+	Node pointer=node;
+	int temp=node.getId();
+	Node largest=node;
+	while(pointer!=null) {
+		if(pointer.getId()>temp) {
+			temp=pointer.getId();
+			largest=pointer;
+		}
+		pointer=pointer.right;
+	}
+	return largest;
+}
+public Node findSmallest(Node result) {
 	int temp=result.id;
 	Node pointer=result;
-	Node smallestNode=null;
+	Node smallestNode=result;
 	while(pointer!=null)
 	{		if(temp>pointer.id)
 			{
