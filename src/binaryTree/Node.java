@@ -4,12 +4,14 @@ public class Node {
 	Node left,right;
 	String name;
 	int id;
+	int balance;
 
 	public Node(String name,int id) {
 		this.id=id;
 		this.name=name;
 		this.left=null;
 		this.right=null;
+		this.balance=0;
 	}
 	public Node getLeft() {
 		return left;
@@ -37,7 +39,13 @@ public class Node {
 	}
 	@Override
 	public String toString() {
-		return this.name+", "+this.id;
+		return this.id+" Balance: "+balance;
+	}
+	public int getBalance() {
+		return balance;
+	}
+	public void setBalance(int balance) {
+		this.balance = balance;
 	}
 
 }

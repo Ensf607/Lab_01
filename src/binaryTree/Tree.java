@@ -19,17 +19,73 @@ public class Tree {
 			while (true) {
 
 				Node parent = pointer;
+				
 				if (n.getId() > pointer.getId()) {
 					pointer = pointer.getRight();
 					if (pointer == null) {
 						parent.setRight(n);
+						updateBalance(root);
+//						rotateTree();
+						Node pivot=findPivot(n);
+						//System.err.println("HHH");
+						if(pivot!=null)
+						{
+							String type=rotationType(pivot,n);
+							if (type=="LL") {
+								rotateRight(pivot);
+							}
+							else if (type=="LR")
+							{
+								rotateLeft(pivot.left);
+								rotateRight(pivot);
+							}
+							else if(type=="RR")
+								rotateLeft(pivot);
+							else if (type=="RL")
+							{
+								rotateRight(pivot.right);
+								rotateLeft(pivot);
+							}
+							else {
+								System.err.println("Rotation ERROR");
+							}
+							updateBalance(root);
+							
+						}
+						
 						return;
-					}
+					}}
 
-				} else if (n.getId() < pointer.getId()) {
+				 else if (n.getId() < pointer.getId()) {
 					pointer = pointer.getLeft();
 					if (pointer == null) {
 						parent.setLeft(n);
+						updateBalance(root);
+						Node pivot=findPivot(n);
+						if(pivot!=null)
+						{
+							String type=rotationType(pivot,n);
+							if (type=="LL") {
+								rotateRight(pivot);
+							}
+							else if (type=="LR")
+							{
+								rotateLeft(pivot.left);
+								rotateRight(pivot);
+							}
+							else if(type=="RR")
+								rotateLeft(pivot);
+							else if (type=="RL")
+							{
+								rotateRight(pivot.right);
+								rotateLeft(pivot);
+							}
+							else {
+								System.err.println("Rotation ERROR");
+							}
+							updateBalance(root);
+							
+						}
 						return;
 					}
 				} else {
@@ -278,11 +334,11 @@ public class Tree {
 	public Node findParent(Node child) {
 		Node pointer = root;
 		if (pointer == child) {
-			System.err.println("This is Root no parent");
+//			System.err.println("This is Root no parent");
 			return null;
 		}
 		if (child==null) {
-			System.err.println("NULL node");
+//			System.err.println("NULL node");
 			return null;
 		}
 		while (pointer != null) {
@@ -307,19 +363,163 @@ public class Tree {
 			return 0;
 		}
 		else if(node.left!=null || node.right!=null) {
-			System.err.println(Math.max(heightLeft, heightRight));
 			if(node.left!=null) {
 				heightLeft+=(height(pointer.left)+1);
-				return heightLeft;
+//				return heightLeft;
 			}
 			if(node.right!=null) {
 				heightRight+=(height(pointer.right)+1);
-				return heightRight;
+//				return heightRight;
 			}
 			
 		}
 		return Math.max(heightLeft, heightRight);
 
+	}
+	/**
+	 * 
+	 * @param node its root
+	 */
+	public void updateBalance(Node node) {
+		int heightL=0,heightR=0;
+		if(node==null)
+			return;
+		if (node.left!=null) {
+			heightL=height(node.left)+1;
+		}
+		if(node.right!=null) {
+			heightR=height(node.right)+1;
+			
+		}
+//		System.err.println(node.id+"  "+heightL);
+		node.setBalance(heightR-heightL);
+		updateBalance(node.left);
+		updateBalance(node.right);
+		
+		
+		
+		
+	}
+//	public boolean checkTree(Node node) {
+//		boolean checkl,checkr;
+//		if(node!=null)
+//		{
+//		if(node.balance>1 || node.balance<-1)
+//			return true;}
+//		checkl=checkTree(node.left);
+//		checkr=checkTree(node.right);
+//		if(checkl || checkr)
+//			return true;
+//		return false;
+//		
+//		
+//	
+//		
+//	}
+	public Node findPivot  (Node node) {
+		Node parent=findParent(node);
+	
+		while(parent!=null) {
+		if(parent.balance>1 || parent.balance<-1) {
+			return parent;
+		}
+		
+		parent=findParent(parent);
+	}
+		return null;}
+	//TODO
+	public void rotateLeft(Node pivot) {
+		Node son=pivot.right;
+		Node sonTree=son.left;
+		Node pivotParent=findParent(pivot);
+		if(pivotParent!=null) {
+			if(pivotParent.right==pivot) {
+			pivotParent.right=son;
+			son.left=pivot;
+			pivot.right=sonTree;
+			}
+			else if(pivotParent.left==pivot) {
+				pivotParent.left=son;
+				son.left=pivot;
+				pivot.right=sonTree;
+			}}
+			else {
+				root=son;
+				son.left=pivot;
+				pivot.right=sonTree;
+			}
+			
+		}
+		
+		
+		
+	
+	public void rotateRight(Node pivot) {
+		Node son=pivot.left;
+		Node sonTree=son.right;
+		Node pivotParent=findParent(pivot);
+		if(pivotParent!=null) {
+			if(pivotParent.left==pivot) {
+			pivotParent.left=son;
+			son.right=pivot;
+			pivot.left=sonTree;
+			}
+			else if (pivotParent.right==pivot) {
+				pivotParent.right=son;
+				son.right=pivot;
+				pivot.left=sonTree;
+			}
+			
+			}
+			else {
+//				System.out.println(son);
+				root=son;
+				son.right=pivot;
+				pivot.left=sonTree;
+			}
+			
+		}
+		
+	
+	
+	public String rotationType(Node pivot,Node inserted) {
+		
+/*	find type of rotation at pivot wethwe its LL,LR,RR,RL
+	You need tofigure out if left heavy or right heavy
+	-if left heavy the either LL or LR
+	-else right heavy RR, RL
+	
+	LL: LEft heavy then keep going left until you find inserted
+	LR: go left then check right, keep doing so until reach inserted
+		e
+//		LL
+//		RR
+//		LR
+//		RL
+		*/
+		Node pointer=pivot;
+		//right heavy
+		if(pivot.balance>0)
+			
+		{
+			Node parent=findParent(inserted);
+			if(parent.right==inserted)
+				return "RR";
+			else if(parent.left==inserted) {
+				return "RL";
+				
+			}
+		}
+		//Left Heavy
+		else if(pivot.balance<0) {
+			Node parent=findParent(inserted);
+			if (parent.right==inserted)
+				return "LR";
+			else if (parent.left==inserted)
+				return "LL";
+			
+		}
+		return null;
 	}
 
 }
