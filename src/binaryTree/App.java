@@ -16,39 +16,19 @@ public static void main(String[] args) {
 	tree.insert(new Node("Sam",-2));
 	tree.insert(new Node("khaled",8));
 	tree.insert(new Node("khaled",9));
-//	tree.insert(new Node("khaled",40));
-//	tree.insert(new Node("khaled",62));
-//	tree.insert(new Node("khaled",-11));
-//	tree.insert(new Node("khaled",-9));
-//	tree.insert(new Node("khaled",3));
-//	tree.insert(new Node("khaled",11));
-//	tree.insert(new Node("khaled",15));
+	tree.insert(new Node("khaled",9));
 	tree.print();
-	System.err.println(tree.root);
-//	Node result=tree.search(2);
-//	Node parent=tree.findParent(result);
-//	Node smallest=tree.findSmallest(result);
-//	Node largest=tree.findLargest(result);
-//	tree.delete(12);
-//	System.out.println("-------------");
-//	tree.print();
-//	System.out.println("-------------");
-	Node result=tree.search(8);
-//	Node pivot=tree.findPivot(result);
-////	String type=tree.rotationType(result, result.left.right);
-//	tree.rotateRight(pivot);
-//	
 	System.out.println("-------------");
-//	tree.print();
-//	System.out.println(type);
-//	if(pivot!=null)
-//		System.out.println(pivot);
-//	int t=tree.height(result);
-//	tree.print();
+	System.out.println("New Root is:"+tree.root);
+	
+	System.out.println("-------------");
+	tree.delete(8);
+	Node result=tree.search(10);
 	Node parent=tree.findParent(result);
 	
-//	System.out.println(tree.search(10).name);
-	System.out.println(parent);
+	System.out.println("The parent of "+result+" is: "+ parent);
+	System.out.println("-------------");
+	tree.print();
 	
 }
 }
