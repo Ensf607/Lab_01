@@ -31,6 +31,7 @@ public static void main(String[] args) {
 	treeAVL.insertAVL(new Node("Sam",-2));
 	treeAVL.insertAVL(new Node("khaled",8));
 	treeAVL.insertAVL(new Node("khaled",9));
+	/**************Testing****************/
 	System.out.println("------------Regular Binary Tree------------");
 	tree.print();
 	System.out.println("------------Testing Search------------");
