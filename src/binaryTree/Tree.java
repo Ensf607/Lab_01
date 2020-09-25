@@ -6,13 +6,56 @@ public class Tree {
 	public Tree() {
 		root = null;
 	}
+	/**
+	 * Regular insert method
+	 * @param n
+	 */
+public void insert (Node n) {
+	if (n == null)
+		return;
+	n.setLeft(null);
+	n.setRight(null);
+	if (root == null)
+		root = n;
+	else {
+		Node pointer = root;
+		while (true) {
 
+			Node parent = pointer;
+
+			if (n.getId() > pointer.getId()) {
+				pointer = pointer.getRight();
+				if (pointer == null) {
+					parent.setRight(n);
+					updateBalance(root);
+					return;
+				}
+			}
+
+			else if (n.getId() < pointer.getId()) {
+				pointer = pointer.getLeft();
+				if (pointer == null) {
+					parent.setLeft(n);
+					updateBalance(root);
+					return;
+				}
+			} else {
+				System.err.println(n + " Student already exisit");
+				return;
+			}
+
+		}
+
+	}
+
+	
+}
 	/**
 	 * This is insert method applies the AVL tree concept
 	 * 
 	 * @param n
 	 */
-	public void insert(Node n) {
+	public void insertAVL(Node n) {
 		if (n == null)
 			return;
 		n.setLeft(null);
